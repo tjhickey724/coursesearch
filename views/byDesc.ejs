@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Find a course by keywords </h1>
+    <form method="post" action="/byDesc">
+      Phrase: <input type="text" name="phrase"><br>
+      <input type="submit">
+    </form>
+    <hr>
+    <h1>Courses with the phrase: '<%= phrase %>'</h1>
+    <ul>
+      <% cs.map(c => {%>
+        <li><%= c['subject'] %>
+            <%= c['coursenum'] %>
+            <a href="/byNum/<%= c['id']%>">
+              <%=  c['name'] %>
+            </a>
+        </li>
+      <% }) %>
+    </ul>
+  </body>
+</html>

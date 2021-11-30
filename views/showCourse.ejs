@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Info for <%= c['name'] %> </h1>
+    <ul>
+    <% for(let k in c){%>
+      <li><%= k %>:  <%= c[k] %> </li>
+    <% }%>
+    </ul>
+  </body>
+</html>
