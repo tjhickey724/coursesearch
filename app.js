@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -12,6 +13,7 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.use(cors()); // this is crucial for debugging on web browser
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -42,11 +44,14 @@ app.get('/courseByNum/:num', (req,res,next) => {
 })
 
 app.post('/coursesByDesc', (req,res,next) => {
-  let phrase = req.body.phrase
+  //console.log('in /coursesByDesc')
+  let phrase = req.body.phrase.toLowerCase()
+  //console.dir(phrase)
   let cs = courses.filter(
-       x => x['description'].includes(phrase))
-  console.log('cs=')
-  console.dir(courses.map(x=>x['name']))
+       x => x['description'].toLowerCase().includes(phrase)
+     )
+  //console.log('cs=')
+  //console.dir(courses.map(x=>x['name']))
   res.json(cs)
 })
 
@@ -70,9 +75,9 @@ app.get('/byDesc',(req,res,next) => {
 
 app.post('/byDesc',(req,res,next) => {
   try {
-    let phrase = req.body.phrase
+    let phrase = req.body.phrase.toLowerCase()
     let cs = courses.filter(
-         x => x['description'].includes(phrase)
+         x => x['description'].toLowerCase().includes(phrase)
        )
     res.locals.cs = cs
     res.locals.phrase = phrase
